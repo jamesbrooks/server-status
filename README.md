@@ -1,10 +1,12 @@
 # Server Status
 
-[![Code Climate](https://codeclimate.com/github/jamesbrooks/server-status.png)](https://codeclimate.com/github/JamesBrooks/git-runner)
-[![Gem Version](https://badge.fury.io/rb/server-status.png)](http://badge.fury.io/rb/git-runner)
-[![Dependency Status](https://gemnasium.com/jamesbrooks/server-status.png)](https://gemnasium.com/JamesBrooks/git-runner)
+[![Code Climate](https://codeclimate.com/github/jamesbrooks/server-status/badges/gpa.svg)](https://codeclimate.com/github/jamesbrooks/server-status)
+[![Gem Version](https://badge.fury.io/rb/server-status.svg)](http://badge.fury.io/rb/server-status)
+[![Dependency Status](https://gemnasium.com/jamesbrooks/server-status.svg)](https://gemnasium.com/JamesBrooks/server-status)
 
 Command line tool for quickly fetching and displaying vital host metrics.
+
+![Screnshot](https://raw.github.com/jamesbrooks/server-status/master/screenshot.jpg)
 
 ## Installation
 
