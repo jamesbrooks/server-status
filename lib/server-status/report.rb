@@ -12,14 +12,13 @@ module ServerStatus
     def generate_table
       str = "\n"
 
-      # Report any failures
-      if (failed_hosts = @host_set.hosts.reject(&:feteched_status?)).any?
-        failed_hosts.each do |host|
-          str << "Failure #{host.name} - #{host.status[:error]}\n".colorize(:red)
+      # Gather failures
+      failed_columns = if (failed_hosts = @host_set.hosts.reject(&:feteched_status?)).any?
+        failed_hosts.map do |host|
+          { name: host.name, error: host.status[:error].strip }
         end
-
-        str << "\n"
       end
+
 
       columns = [ :host ] + @host_set.hosts.detect(&:feteched_status?).status.keys
 
@@ -56,6 +55,18 @@ module ServerStatus
         end
 
         str << "\n"
+      end
+
+      # Display failures at the end
+      if failed_columns
+        str << "\nFAILED HOSTS".colorize(:blue)
+        str << "\n"
+        failed_columns.each do |host|
+          str << host[:name]
+          str << ' ' * (COLUMN_SPACING + column_widths[:host] - host[:name].uncolorize.size)
+          str << host[:error].colorize(:red)
+          str << "\n"
+        end
       end
 
       str << "\n"
