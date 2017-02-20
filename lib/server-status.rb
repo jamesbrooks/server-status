@@ -1,6 +1,7 @@
 require 'open3'
 require 'commander'
 require 'colorize'
+require 'tty-progressbar'
 
 require 'server-status/version'
 require 'server-status/application'

@@ -1,3 +1,5 @@
+require 'thread'
+
 module ServerStatus
   class HostSet
     attr_accessor :config, :options, :hosts
@@ -10,9 +12,14 @@ module ServerStatus
     end
 
     def fetch_statuses
+      progress_bar = TTY::ProgressBar.new("Querying hosts [:bar]", total: @hosts.size, clear: true, hide_cursor: true)
+      semaphore = Mutex.new
+      completed_hosts = 0
+
       threads = @hosts.map do |host|
         Thread.new do
           host.fetch_status(status_command)
+          semaphore.synchronize { progress_bar.advance }
         end
       end
 
