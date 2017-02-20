@@ -5,7 +5,6 @@ module ServerStatus
 
     def initialize(options)
       @options = options
-      @parts   = []
     end
 
     def requested_options
@@ -13,39 +12,41 @@ module ServerStatus
     end
 
     def to_script
+      parts = []
+
       if @options.os
-        @parts << "lsb_release -d | cut -f2"
+        parts << "lsb_release -d | cut -f2"
       end
 
       if @options.uptime
-        @parts << "cat /proc/uptime | cut -d\" \" -f1"
+        parts << "cat /proc/uptime | cut -d\" \" -f1"
       end
 
       if @options.load
-        @parts << "cat /proc/loadavg | cut -d\" \" -f -3"
+        parts << "cat /proc/loadavg | cut -d\" \" -f -3"
       end
 
       if @options.disk_usage
-        @parts << "df -h | awk '/\\/$/' | sed 's/ \\+/ /g' | cut -d\" \" -f5"
+        parts << "df -h | awk '/\\/$/' | sed 's/ \\+/ /g' | cut -d\" \" -f5"
       end
 
       if @options.inode_usage
-        @parts << "df -hi | awk '/\\/$/' | sed 's/ \\+/ /g' | cut -d\" \" -f5"
+        parts << "df -hi | awk '/\\/$/' | sed 's/ \\+/ /g' | cut -d\" \" -f5"
       end
 
       if @options.memory_usage
-        @parts << "free -m | sed -n 3p | sed 's/ \\+/ /g' | cut -d\" \" -f 3-"
+        parts << "free -m | sed -n 3p | sed 's/ \\+/ /g' | cut -d\" \" -f 3-"
       end
 
       if @options.package_updates
-        @parts << "cat /var/lib/update-notifier/updates-available 2>/dev/null"
+        parts << "cat /var/lib/update-notifier/updates-available 2>/dev/null"
       end
 
       if @options.reboot_required
-        @parts << "if [ -f /var/run/reboot-required ]; then echo 1 ; fi"
+        parts << "if [ -f /var/run/reboot-required ]; then echo 1 ; fi"
       end
 
-      @parts.join("\necho '#{SEPARATOR}'\n")
+      parts.join("\necho '#{SEPARATOR}'\n")
     end
   end
 end
