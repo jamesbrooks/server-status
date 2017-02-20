@@ -101,6 +101,25 @@ module ServerStatus
       format_percentage(used / (used + available))
     end
 
+    def format_clock_drift(val)
+      if val == ""
+        return "??? ms".colorize(:red)
+      end
+
+      # Drift in milliseconds
+      drift = (val.to_f * 1000).round
+
+      color = if drift.abs < 2000
+        :normal
+      elsif drift.abs < 30_000
+        :yellow
+      else
+        :red
+      end
+
+      "#{drift} ms".colorize(color)
+    end
+
     def format_package_updates(val)
       str = ''
 

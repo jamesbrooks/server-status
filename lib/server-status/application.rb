@@ -27,6 +27,7 @@ module ServerStatus
         c.option '--[no-]disk-usage'
         c.option '--[no-]inode-usage'
         c.option '--[no-]memory-usage'
+        c.option '--[no-]clock-drift'
         c.option '--[no-]package-updates'
         c.option '--[no-]reboot-required'
 
@@ -38,6 +39,7 @@ module ServerStatus
             disk_usage:      true,
             inode_usage:     true,
             memory_usage:    true,
+            clock_drift:     true,
             package_updates: true,
             reboot_required: true
           }.merge(@config.options))

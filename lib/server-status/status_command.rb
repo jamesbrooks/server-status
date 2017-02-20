@@ -38,6 +38,10 @@ module ServerStatus
         parts << "free -m | sed -n 3p | sed 's/ \\+/ /g' | cut -d\" \" -f 3-"
       end
 
+      if @options.clock_drift
+        parts << "ntpdate -q pool.ntp.org | head -1 | cut -d \" \" -f 6 | sed \"s/.$//\""
+      end
+
       if @options.package_updates
         parts << "cat /var/lib/update-notifier/updates-available 2>/dev/null"
       end
