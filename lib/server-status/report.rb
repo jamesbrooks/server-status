@@ -97,8 +97,14 @@ module ServerStatus
     end
 
     def format_memory_usage(val)
-      used, available = val.split(' ').map(&:to_f)
-      format_percentage(used / (used + available))
+      # Parse /proc/meminfo values
+      meminfo_values = val.scan(/^(.+?):\s+(\d+)\skB/).map { |k,v| [ k, v.to_i ] }
+      meminfo = Hash[meminfo_values]
+
+      total_memory     = meminfo['MemTotal']
+      available_memory = meminfo['MemFree'] + meminfo['Buffers'] + meminfo['Cached']
+
+      format_percentage((total_memory - available_memory) / total_memory.to_f)
     end
 
     def format_clock_drift(val)

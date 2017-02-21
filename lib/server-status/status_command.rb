@@ -35,7 +35,7 @@ module ServerStatus
       end
 
       if @options.memory_usage
-        parts << "free -m | sed -n 3p | sed 's/ \\+/ /g' | cut -d\" \" -f 3-"
+        parts << "cat /proc/meminfo | grep -P '^(MemTotal|MemFree|Cached|Buffers):'"
       end
 
       if @options.clock_drift
