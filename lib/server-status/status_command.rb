@@ -43,7 +43,7 @@ module ServerStatus
       end
 
       if @options.package_updates
-        parts << "cat /var/lib/update-notifier/updates-available 2>/dev/null"
+        parts << "cat /var/lib/update-notifier/updates-available 2>/dev/null || true"
       end
 
       if @options.reboot_required
