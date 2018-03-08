@@ -41,7 +41,7 @@ module ServerStatus
             memory_usage:    true,
             clock_drift:     true,
             package_updates: true,
-            reboot_required: true
+            reboot_required: false
           }.merge(@config.options))
 
           ServerStatus::Commands::Run.new(@config, options).perform
