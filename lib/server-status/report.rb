@@ -134,7 +134,7 @@ module ServerStatus
       end
 
       if val =~ /(\d+) (updates are|update is a) security update(s)?/
-        str << " (#{$1} security)".colorize(:red) if $1.to_i != 0
+        str << " #{$1}!".colorize(:red) if $1.to_i != 0
       end
 
       str
