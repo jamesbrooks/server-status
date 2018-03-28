@@ -88,15 +88,15 @@ module ServerStatus
       val
     end
 
-    def format_disk_usage(val)
+    def format_disk(val)
       format_percentage(val)
     end
 
-    def format_inode_usage(val)
+    def format_inode(val)
       format_percentage(val)
     end
 
-    def format_memory_usage(val)
+    def format_memory(val)
       # Parse /proc/meminfo values
       meminfo_values = val.scan(/^(.+?):\s+(\d+)\skB/).map { |k,v| [ k, v.to_i ] }
       meminfo = Hash[meminfo_values]
@@ -113,7 +113,7 @@ module ServerStatus
       end
 
       # Drift in milliseconds
-      drift = (val.to_f * 1000).round
+      drift = (val.to_f * 1000).round.abs
 
       color = if drift.abs < 2000
         :normal
@@ -126,7 +126,7 @@ module ServerStatus
       "#{drift} ms".colorize(color)
     end
 
-    def format_package_updates(val)
+    def format_pkg_updates(val)
       str = ''
 
       if val =~ /(\d+) packages can be updated/

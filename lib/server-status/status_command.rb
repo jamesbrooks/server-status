@@ -26,15 +26,15 @@ module ServerStatus
         parts << "cat /proc/loadavg | cut -d\" \" -f -3"
       end
 
-      if @options.disk_usage
+      if @options.disk
         parts << "df -h | awk '/\\/$/' | sed 's/ \\+/ /g' | cut -d\" \" -f5"
       end
 
-      if @options.inode_usage
+      if @options.inode
         parts << "df -hi | awk '/\\/$/' | sed 's/ \\+/ /g' | cut -d\" \" -f5"
       end
 
-      if @options.memory_usage
+      if @options.memory
         parts << "cat /proc/meminfo | grep -P '^(MemTotal|MemFree|Cached|Buffers):'"
       end
 
@@ -42,7 +42,7 @@ module ServerStatus
         parts << "ntpdate -q pool.ntp.org | head -1 | cut -d \" \" -f 6 | sed \"s/.$//\""
       end
 
-      if @options.package_updates
+      if @options.pkg_updates
         parts << "cat /var/lib/update-notifier/updates-available 2>/dev/null || true"
       end
 

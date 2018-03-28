@@ -36,11 +36,11 @@ module ServerStatus
             os:              false,
             uptime:          true,
             load:            true,
-            disk_usage:      true,
-            inode_usage:     true,
-            memory_usage:    true,
+            disk:            true,
+            inode:           true,
+            memory:          true,
             clock_drift:     true,
-            package_updates: true,
+            pkg_updates:     true,
             reboot_required: false
           }.merge(@config.options))
 
