@@ -43,7 +43,7 @@ module ServerStatus
       end
 
       if @options.pkg_updates
-        parts << "cat /var/lib/update-notifier/updates-available 2>/dev/null || true"
+        parts << "cat /etc/motd || cat /var/run/motd.dynamic || true"
       end
 
       if @options.reboot_required
