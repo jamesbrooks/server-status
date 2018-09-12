@@ -35,7 +35,7 @@ module ServerStatus
       end
 
       if @options.memory
-        parts << "cat /proc/meminfo | grep -P '^(MemTotal|MemFree|Cached|Buffers):'"
+        parts << "cat /proc/meminfo | grep -P '^(MemTotal|MemAvailable|MemFree|Cached|Buffers):'"
       end
 
       if @options.clock_drift

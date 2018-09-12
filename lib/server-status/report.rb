@@ -102,7 +102,7 @@ module ServerStatus
       meminfo = Hash[meminfo_values]
 
       total_memory     = meminfo['MemTotal']
-      available_memory = meminfo['MemFree'] + meminfo['Buffers'] + meminfo['Cached']
+      available_memory = meminfo['MemAvailable'] || (meminfo['MemFree'] + meminfo['Buffers'] + meminfo['Cached'])
 
       format_percentage((total_memory - available_memory) / total_memory.to_f)
     end
