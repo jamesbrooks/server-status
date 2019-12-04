@@ -38,7 +38,7 @@ module ServerStatus
 
   private
     def execute_command(status_command)
-      stdin, stdout, stderr, wait_thread = Open3.popen3("ssh #{@host} \"bash -s\" << EOF\n#{status_command.to_script}\nEOF")
+      stdin, stdout, stderr, wait_thread = Open3.popen3("ssh -o ConnectTimeout=10 #{@host} \"bash -s\" << EOF\n#{status_command.to_script}\nEOF")
 
       if wait_thread.value.success?
         stdout.read
