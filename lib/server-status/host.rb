@@ -38,7 +38,8 @@ module ServerStatus
 
   private
     def execute_command(status_command)
-      stdin, stdout, stderr, wait_thread = Open3.popen3("ssh -o ConnectTimeout=10 #{@host} \"bash -s\" << EOF\n#{status_command.to_script}\nEOF")
+      proxy_jump = @config.settings["proxy_jump"]
+      stdin, stdout, stderr, wait_thread = Open3.popen3("ssh -o ConnectTimeout=10 #{"-J #{proxy_jump}" if proxy_jump} #{@host} \"bash -s\" << EOF\n#{status_command.to_script}\nEOF")
 
       if wait_thread.value.success?
         stdout.read
